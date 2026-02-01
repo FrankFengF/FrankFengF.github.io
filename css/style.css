@@ -210,6 +210,10 @@ figure figcaption {
   -o-transition: 0.3s;
   transition: 0.3s;
 }
+#colorlib-aside #colorlib-main-menu ul li a {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
 #colorlib-aside #colorlib-main-menu ul li a:after {
   content: "";
   position: absolute;
@@ -1325,3 +1329,18 @@ strong {
 	  font-size: 14px;
 	}
   }
+
+
+#colorlib-aside #colorlib-main-menu ul li a,
+#colorlib-aside #colorlib-main-menu ul li a:link,
+#colorlib-aside #colorlib-main-menu ul li a:visited,
+#colorlib-aside #colorlib-main-menu ul li a:focus,
+#colorlib-aside #colorlib-main-menu ul li a:active {
+  color: rgba(0, 0, 0, 0.7) !important;
+  text-decoration: none;
+}
+
+#colorlib-aside #colorlib-main-menu ul li.active a {
+  color: #000 !important;
+  font-weight: 600;
+}

@@ -3,6 +3,7 @@ import {
   skills,
   education,
   experience,
+  research,
   footer,
   contactLinks,
 } from "./user-data/data.js";
@@ -10,30 +11,44 @@ import { html, render } from "https://unpkg.com/lit-html?module";
 
 import { URLs } from "./user-data/urls.js";
 
+import { selectedProjects } from "../user-data/data.js";
+
+import { publications } from "./user-data/data.js";
+
 const { medium, gitConnected, gitRepo } = URLs;
 
-async function fetchBlogsFromMedium(url) {
-  try {
-    const response = await fetch(url);
-    const { items, feed } = await response.json();
-    document.getElementById("profile-img").src = feed.image;
-    populateBlogs(items, "blogs");
-  } catch (error) {
-    throw new Error(
-      `Error in fetching the blogs from Medium profile: ${error}`
-    );
-  }
-}
+// async function fetchBlogsFromMedium(url) {
+//   try {
+//     const response = await fetch(url);
+//     const { items, feed } = await response.json();
+//     document.getElementById("profile-img").src = feed.image;
+//     populateBlogs(items, "blogs");
+//   } catch (error) {
+//     throw new Error(
+//       `Error in fetching the blogs from Medium profile: ${error}`
+//     );
+//   }
+// }
+
 
 async function fetchReposFromGit(url) {
   try {
     const response = await fetch(url);
-    const items = await response.json();
+    let items = await response.json();
+
+    console.log("All repos:", items.map(repo => repo.name));
+    
+    items = items.filter(repo =>
+      selectedProjects.includes(repo.name)
+    );
+    
+    console.log("Filtered repos:", items.map(repo => repo.name));
     populateRepo(items, "repos");
   } catch (error) {
-    throw new Error(`Error in fetching the blogs from repos: ${error}`);
+    throw new Error(`Error in fetching repos: ${error}`);
   }
 }
+
 
 async function fetchGitConnectedData(url) {
   try {
@@ -78,19 +93,33 @@ function populateBio(items, id) {
   render(bioTemplate, bioTag);
 }
 
-function populateSkills(items, id) {
+function populateSkills(skills, id) {
   const skillsTag = document.getElementById(id);
+  if (!skillsTag) return;
 
-  const skillsTemplate = html` ${items.map(
-    (item) => html` <div class="col-md-3 animate-box">
-      <div class="progress-wrap">
-        <li class="skill-item">${item}</li>
-      </div>
-    </div>`
-  )}`;
+  const skillsTemplate = html`
+    ${Object.entries(skills).map(
+      ([category, items]) => html`
+        <div class="col-md-12 animate-box skills-group">
+          <h3 class="skills-title">${category}</h3>
+          <div class="row">
+            ${items.map(
+              (item) => html`
+                <div class="col-md-3">
+                  <div class="progress-wrap">
+                    <li class="skill-item">${item}</li>
+                  </div>
+                </div>
+              `
+            )}
+          </div>
+        </div>
+      `
+    )}
+  `;
+
   render(skillsTemplate, skillsTag);
 }
-
 function populateBlogs(items, id) {
   const projectdesign = document.getElementById(id);
   const createCategoryBadges = (categories) => html`
@@ -127,42 +156,33 @@ function populateRepo(items, id) {
   const projectdesign = document.getElementById(id);
   if (!projectdesign || !items?.length) return;
 
-  const statsTemplate = (item) => html`
-    <div class="stats-row">
-      <div class="language-div">
-        <span class="language-dot"></span>
-        ${item.language}
-      </div>
-      <div class="stats-div">
-        <img
-          src="https://img.icons8.com/ios-filled/16/666666/star--v1.png"
-          alt="Stars"
-        />
-        ${item.stars}
-      </div>
-      <div class="stats-div">
-        <img
-          src="https://img.icons8.com/ios-filled/16/666666/code-fork.png"
-          alt="Forks"
-        />
-        ${item.forks}
-      </div>
-    </div>
-  `;
-
   const repoTemplate = html`
     <div class="repo-wrapper">
-      ${items.slice(0, 4).map(
+      ${items.map(
         (item) => html`
           <div class="repo-card">
             <a
-              href="https://github.com/${item.author}/${item.name}"
+              href="${item.html_url}"
               target="_blank"
               class="repo-link"
             >
               <p class="repo-heading">${item.name}</p>
-              <p class="repo-description">${item.description}</p>
-              ${statsTemplate(item)}
+              <p class="repo-description">
+                ${item.description || ""}
+              </p>
+
+              <div class="stats-row">
+                <div class="language-div">
+                  <span class="language-dot"></span>
+                  ${item.language || "N/A"}
+                </div>
+                <div class="stats-div">
+                  ⭐ ${item.stargazers_count}
+                </div>
+                <div class="stats-div">
+                  🍴 ${item.forks_count}
+                </div>
+              </div>
             </a>
           </div>
         `
@@ -171,6 +191,37 @@ function populateRepo(items, id) {
   `;
 
   render(repoTemplate, projectdesign);
+}
+
+
+function populatePublications(items, id) {
+  const container = document.getElementById(id);
+  if (!container || !items?.length) return;
+
+  const publicationTemplate = html`
+    ${items.map(
+      (pub) => html`
+        <div class="blog-card">
+          <div class="blog-content">
+            <a href="${pub.link}" target="_blank" class="blog-link">
+              <p class="blog-heading">${pub.title}</p>
+              <p class="publish-date">
+                ${pub.venue} · ${pub.year}
+              </p>
+              <p class="blog-description">
+                <strong>Authors:</strong> ${pub.authors}
+              </p>
+              <p class="blog-description">
+                ${pub.description}
+              </p>
+            </a>
+          </div>
+        </div>
+      `
+    )}
+  `;
+
+  render(publicationTemplate, container);
 }
 
 function populateExp_Edu(items, id) {
@@ -325,11 +376,14 @@ populateBio(bio, "bio");
 
 populateSkills(skills, "skills");
 
-fetchBlogsFromMedium(medium);
+populatePublications(publications, "publications");
+
+// fetchBlogsFromMedium(medium);
 fetchReposFromGit(gitRepo);
 fetchGitConnectedData(gitConnected);
 
 populateExp_Edu(experience, "experience");
+populateExp_Edu(research, "research");
 populateExp_Edu(education, "education");
 
 populateLinks(footer, "footer");

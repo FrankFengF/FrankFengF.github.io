@@ -155,7 +155,6 @@
     clickMenu();
     navigationSection();
     mobileMenuOutsideClick();
-    detectDayNightMode();
   });
 })();
 
