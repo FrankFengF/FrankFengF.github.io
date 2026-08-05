@@ -1,39 +1,66 @@
-# Portfolio Website
+# Frank Feng Portfolio
 
-A modern, responsive portfolio website built with JavaScript and lit-html templating.
+Personal portfolio website for Frank Feng. This site highlights my background, skills, work and research experience, selected projects, publications, and contact links.
+
+The project is a forked and customized static portfolio template. The README has been rewritten to reflect my own version of the site.
 
 ## Features
 
-- 📱 Responsive Design
-- 🚀 Dynamic Content Loading
-- 📊 GitHub Repository Stats
-- 📝 Medium Blog Integration
-- 🏔️ Trekking Adventures Section
-- 💼 Work Experience Timeline
-- 🎓 Education History
-- 🔗 Social Media Integration
+- Responsive personal portfolio layout
+- About, skills, work experience, research experience, education, selected projects, publications, and contact sections
+- Dynamic content loaded from `user-data/data.js`
+- GitHub project cards loaded from the GitHub API
+- Lightweight static-site setup with no build step required
 
 ## Tech Stack
 
-- JavaScript (ES6+)
-- lit-html for templating
-- CSS3 with Flexbox/Grid
-- GitHub API Integration
-- Medium RSS Feed Integration
+- HTML5
+- CSS3
+- JavaScript ES modules
+- lit-html
+- Bootstrap
+- Font Awesome
+- GitHub API
 
-## Installation
+## Project Structure
+
+```text
+.
+├── index.html
+├── index.js
+├── css/
+├── js/
+├── pages/
+├── user-data/
+│   ├── data.js
+│   └── urls.js
+└── README.md
+```
+
+## Run Locally
+
+Clone the repository and serve it with any simple static file server:
 
 ```bash
-# Clone the repository
-git clone https://github.com/vinaysomawat/vinaysomawat.github.io.git
-
-# Navigate to project directory
-cd vinaysomawat.github.io
-
-# Open with live server or similar
+git clone https://github.com/FrankFengF/Frank-portfolio.git
+cd Frank-portfolio
 python -m http.server 8000
 ```
 
-**If you enjoy this project, please consider [supporting me](https://www.paypal.me/vinaysomawat) to continue developing and maintaining it.**
+Then open:
 
-[![Support via PayPal](https://cdn.rawgit.com/twolfson/paypal-github-button/1.0.0/dist/button.svg)](https://www.paypal.me/vinaysomawat)
+```text
+http://localhost:8000
+```
+
+## Updating Content
+
+Most personal content is stored in:
+
+- `user-data/data.js` for bio, skills, experience, education, research, publications, footer, and contact links
+- `user-data/urls.js` for GitHub and other external data sources
+- `index.html` for page structure, metadata, and section ordering
+
+## Credits
+
+This portfolio was forked from an existing open-source portfolio template and customized for Frank Feng.
