@@ -52,6 +52,19 @@ skills: {
 ,
   "experience": [
     {
+      "title": "Roche Diagnostics",
+      "duration": "May 2026 - Aug 2026",
+      "subtitle": "Bioinformatics Data Science Intern",
+      "details": [
+        "Modeled DNA sequencing pipeline runtime, reducing HPC cluster congestion and improving job execution speed by 11.7%.",
+        "Built a Streamlit dashboard backed by Bash scripts and SQLite to monitor CPU/GPU utilization and diagnose job performance.",
+        "Implemented Git-based CI/CD workflows for model versioning and deployment, achieving a 7.3% runtime prediction error rate.",
+        "Analyzed internal agent chatbot queries using SQL and designed new skills, improving tool-calling accuracy by 24%."
+      ],
+      "tags": ["Bioinformatics","Data Science","Optimization"],
+      "icon": "dna"
+    },
+    {
       "title": "Digital China",
       "duration": "Jun 2025 - Aug 2025",
       "subtitle": "AI Intern",
@@ -63,7 +76,7 @@ skills: {
       ],
       "tags": ["AI Agent","LLM","Fine-tuning"],
       "icon": "laptop"
-    }]
+    }  ]
     ,
   "research":[
     {
@@ -142,7 +155,7 @@ skills: {
       "title": "M.S. in Biostatistics",
       "duration": "2025 - 2026",
       "subtitle": "Harvard University, Boston",
-      "details": ["GPA: 4.0/4.0"],
+      "details": ["GPA: 3.96/4.0"],
       "tags": [],
       "icon": "graduation-cap"
     },
@@ -158,7 +171,7 @@ skills: {
   "contactLinks": [
     {
       "label": "Email",
-      "link": "mailto:frankjob1202@gmail.com",
+      "link": "mailto:frankfeng1202@gmail.com",
       "icon": "fa fa-envelope"
     },
     {
